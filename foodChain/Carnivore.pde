@@ -1,0 +1,3 @@
+class Herbivore extends Animal {
+  
+}
