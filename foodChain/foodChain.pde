@@ -2,7 +2,8 @@
 public int fldX = 800;
 public int fldY = 450;
 
-ArrayList carList;
+public ArrayList carList;
+public ArrayList herList;
 
 //初期設定
 void setup(){
@@ -13,6 +14,13 @@ void setup(){
   for( int i = 0; i < 30; i++){
     //アレイリストに肉食動物オブジェクトを追加
     carList.add(new Carnivore( random(fldX - 20) + 10,random(fldY - 20) + 10));
+  }
+  
+  //草食動物クラスの定義
+  herList = new ArrayList();
+  for( int i = 0; i < 120; i++){
+    //アレイリストに草食動物オブジェクトを追加
+    herList.add(new Herbivore( random(fldX - 20) + 10,random(fldY - 20) + 10));
   }
   
 }
@@ -33,6 +41,19 @@ void draw(){
     Carnivore carWoke = (Carnivore)carList.get(i);
     carWoke.moveUpdate();
     carWoke.screen();
+  }
+  
+  //草食動物クラスを作業クラスに出して更新及び表示
+  for( int i = 0; i < herList.size(); i++){
+    Herbivore herWoke = (Herbivore)herList.get(i);
+    herWoke.moveUpdate();
+    herWoke.screen();
+  }
+  
+  //肉食動物の捕食メソッドの実行
+  for( int i = 0; i < carList.size(); i++){
+    Carnivore carWoke = (Carnivore)carList.get(i);
+    carWoke.Eat();
   }
   
 }
