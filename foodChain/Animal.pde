@@ -2,20 +2,18 @@
 abstract class Animal{
   float aniX;      //現在のx座標
   float aniY;      //現在のy座標
-  float aniGoalX;  //目的地のx座標
-  float aniGoalY;  //目的地のy座標
   float aniRad;    //向いてる角度
   float aniSpd;    //速度
-  color aniCol;    //色別
+  int   aniSex;    //性別
+  color aniCol;    //色
   
   //コンストラクタ
   Animal( float _x, float _y, color _col){
    aniX = _x;
    aniY = _y;
-   aniGoalX = random(fldX) + 10;
-   aniGoalY = random(fldY) + 10;
    aniRad = random(360);
    aniSpd = 1;
+   aniSex = (int)random(2);
    aniCol = _col;
   }
   
@@ -49,6 +47,14 @@ abstract class Animal{
     
   }
   
-  //抽象化捕食クラス
-  abstract void Eat();
+  //抽象化当たり判定メソッド
+  abstract void Collision(int a);
+  
+  //抽象化捕食メソッド
+  abstract void Predation(int a);
+  
+  //抽象化生殖メソッド
+  abstract void Reproduction(int a);
+  
+  
 }

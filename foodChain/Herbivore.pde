@@ -7,8 +7,18 @@ class Herbivore extends Animal {
     
   }
   
+  //当たり判定メソッド
+  void Collision(int a){
+    
+  }
+  
   //捕食メソッド
-  void Eat(){
+  void Predation(int a){
+    
+  }
+  
+  //生殖メソッド
+  void Reproduction(int a){
     
   }
 }

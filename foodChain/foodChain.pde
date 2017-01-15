@@ -50,10 +50,10 @@ void draw(){
     herWoke.screen();
   }
   
-  //肉食動物の捕食メソッドの実行
+  //肉食動物の当たり判定
   for( int i = 0; i < carList.size(); i++){
     Carnivore carWoke = (Carnivore)carList.get(i);
-    carWoke.Eat();
+    carWoke.Collision(i);
   }
   
 }
