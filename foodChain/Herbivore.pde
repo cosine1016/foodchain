@@ -18,7 +18,7 @@ class Herbivore extends Animal {
   }
   
   //生殖メソッド
-  void Reproduction(int a){
+  void Reproduction(){
     
   }
 }

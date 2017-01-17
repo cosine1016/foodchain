@@ -4,7 +4,8 @@ abstract class Animal{
   float aniY;      //現在のy座標
   float aniRad;    //向いてる角度
   float aniSpd;    //速度
-  int   aniSex;    //性別
+  int   aniSex;    //性別（0でオス、1でメス）
+  int   aniPre;    //妊娠変数（1以上で妊娠）
   color aniCol;    //色
   
   //コンストラクタ
@@ -14,6 +15,7 @@ abstract class Animal{
    aniRad = random(360);
    aniSpd = 1;
    aniSex = (int)random(2);
+   aniPre = 0;
    aniCol = _col;
   }
   
@@ -35,6 +37,11 @@ abstract class Animal{
     aniX += cos(radians(aniRad))*aniSpd;
     aniY += sin(radians(aniRad))*aniSpd;
     
+    //妊娠しているなら生殖メソッドへ
+    if (!(aniPre == 0)){
+      Reproduction();
+    }
+    
   }
   
   //画面に点を表示
@@ -54,7 +61,7 @@ abstract class Animal{
   abstract void Predation(int a);
   
   //抽象化生殖メソッド
-  abstract void Reproduction(int a);
+  abstract void Reproduction();
   
   
 }
