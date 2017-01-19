@@ -4,27 +4,35 @@ abstract class Animal{
   float aniY;      //現在のy座標
   float aniRad;    //向いてる角度
   float aniSpd;    //速度
+  int   aniType;   //種類（0で肉食動物、1で草食動物
   int   aniSex;    //性別（0でオス、1でメス）
   int   aniPre;    //妊娠変数（1以上で妊娠）
   int   aniAge;    //年齢（一定値で寿命）
   int   aniLife;   //満腹度
   int   aniFull;   //満腹度最大値（遺伝変数）
+  int   aniSpan;   //寿命
   color aniCol;    //色
-  
   int childFull;   //子供に遺伝する際の情報置き場
   
   //コンストラクタ
-  Animal( float _x, float _y, int _full, color _col){
+  Animal( float _x, float _y, int _full, int _type){
    aniX = _x;
    aniY = _y;
    aniRad = random(360);
    aniSpd = 1;
+   aniType = _type;
    aniSex = (int)random(2);
    aniPre = 0;
    aniAge = 0;
    aniLife = _full;
    aniFull = _full;
-   aniCol = _col;
+   if (aniType == 0){
+     aniSpan = 10000;
+     aniCol = color(255,0,0);
+   }else if(aniType == 1){
+     aniSpan = 5000;
+     aniCol = color(0,0,255);
+   }
   }
   
   
@@ -45,7 +53,7 @@ abstract class Animal{
       Reproduction(0);  //更新メソッドから移動する場合引数に意味はない
     }
     
-    if ((aniLife <= 0) || (aniAge == 10000)){  //肉食動物と草食動物の寿命を可変にしたいので考慮の必要あり
+    if ((aniLife <= 0) || (aniAge >= aniSpan)){  //肉食動物と草食動物の寿命を可変にしたいので考慮の必要あり
       Die(a);
     }
     
@@ -73,6 +81,13 @@ abstract class Animal{
     noStroke();
     fill( aniCol);
     ellipse( aniX, aniY, 10, 10);
+    
+  }
+  
+  //初期処理
+  void aniSetup(){
+    //初期年齢をランダム化
+    aniAge += random(1000);
     
   }
   

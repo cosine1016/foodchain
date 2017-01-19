@@ -3,7 +3,7 @@ class Carnivore extends Animal {
 
   //コンストラクタ
   Carnivore( float _x, float _y, int _full){
-    super(_x,_y,_full,color(255,0,0));
+    super(_x,_y,_full,0);
     
   }
   
@@ -17,12 +17,14 @@ class Carnivore extends Animal {
         Predation(i);
       }
     }
+    
+    //メスとオスの衝突判定
     if ((aniSex == 1) && (aniAge >= 1000)){
       //メスのみ判定に入る
       for( int i = 0; i < carList.size(); i++){
         Carnivore carWoke2 = (Carnivore)carList.get(i);
         //距離５以下のオスなら生殖メソッドへ
-        if((dist(aniX, aniY, carWoke2.aniX, carWoke2.aniY) < 5) && !(i == a) && (carWoke2.aniSex == 0 ) && (aniAge >= 1000)){
+        if((dist(aniX, aniY, carWoke2.aniX, carWoke2.aniY) < 5) && !(i == a) && (carWoke2.aniSex == 0 ) && (carWoke2.aniAge >= 1000)){
           Reproduction(i);
         }
       }
@@ -52,7 +54,7 @@ class Carnivore extends Animal {
       aniPre++;
       aniLife--;
     }
-    if (aniPre >= 1000){
+    if (aniPre >= 500){
       //妊娠変数が1000に達したら出産及び速度を戻す
       carList.add(new Carnivore( aniX, aniY, childFull));
       aniPre = 0;
@@ -63,9 +65,15 @@ class Carnivore extends Animal {
   
   //死亡メソッド
   void Die(int a){
+    for(int i = 0; i < 4;i++){
+      if( (int)random(2) == 1){
+        annList.add(new Annual( aniX, aniY, (int)random(3) + 1));
+      }else{
+        perList.add(new Perennial( aniX, aniY, (int)random(3) + 1));
+      }
+    }
     //死亡
     carList.remove(a);
-    //種をまく予定
   }
   
   
