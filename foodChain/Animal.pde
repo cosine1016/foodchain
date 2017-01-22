@@ -27,10 +27,10 @@ abstract class Animal{
    aniLife = _full;
    aniFull = _full;
    if (aniType == 0){
-     aniSpan = 10000;
+     aniSpan = 20000;
      aniCol = color(255,0,0);
    }else if(aniType == 1){
-     aniSpan = 5000;
+     aniSpan = 10000;
      aniCol = color(0,0,255);
    }
   }

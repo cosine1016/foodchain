@@ -13,7 +13,7 @@ class Herbivore extends Animal {
     for( int i = 0; i < annList.size(); i++){
       Annual annWoke2 = (Annual)annList.get(i);
       //距離５以下なら捕食メソッドへ
-      if(dist( aniX, aniY, annWoke2.graX, annWoke2.graY) < 5){
+      if(dist( aniX, aniY, annWoke2.graX, annWoke2.graY) < 10){
         annList.remove(i);
         Predation(i);
       }
@@ -22,7 +22,7 @@ class Herbivore extends Animal {
     for( int i = 0; i < perList.size(); i++){
       Perennial perWoke2 = (Perennial)perList.get(i);
       //距離５以下なら捕食メソッドへ
-      if(dist( aniX, aniY, perWoke2.graX, perWoke2.graY) < 5){
+      if(dist( aniX, aniY, perWoke2.graX, perWoke2.graY) < 10){
         perList.remove(i);
         Predation(i);
       }
@@ -60,7 +60,7 @@ class Herbivore extends Animal {
       aniPre++;
       aniLife--;
     }
-    if (aniPre >= 100){
+    if (aniPre >= 300){
       //妊娠変数が300に達したら出産及び速度を戻す
       for (int i = 0; i < 2;i++){
         herList.add(new Herbivore( aniX, aniY, childFull));
@@ -73,7 +73,7 @@ class Herbivore extends Animal {
   //死亡メソッド
   void Die(int a){
     if( (int)random(2) == 1){
-      annList.add(new Annual( aniX, aniY, (int)random(3) + 1));
+      annList.add(new Annual( aniX, aniY, (int)random(3) + 2));
     }else{
       perList.add(new Perennial( aniX, aniY, (int)random(3) + 1));
     }

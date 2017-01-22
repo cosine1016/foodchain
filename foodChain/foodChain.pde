@@ -15,7 +15,7 @@ void setup(){
   carList = new ArrayList();
   for( int i = 0; i < 50; i++){
     //アレイリストに肉食動物オブジェクトを追加
-    carList.add(new Carnivore( random(fldX - 20) + 20,random(fldY - 20) + 20, (int)random(1000) + 4000));
+    carList.add(new Carnivore( random(fldX - 20) + 20,random(fldY - 20) + 20, (int)random(1000) + 2000));
     //初期処理
     Carnivore carWoke = (Carnivore)carList.get(i);
     carWoke.aniSetup();
@@ -36,7 +36,7 @@ void setup(){
   annList = new ArrayList();
   for( int i = 0; i < 300; i++){
     //アレイリストに一年草オブジェクトを追加
-    annList.add(new Annual( random(fldX - 20) + 20, random(fldY - 20) + 20 , (int)random(3) + 4));
+    annList.add(new Annual( random(fldX - 20) + 20, random(fldY - 20) + 20 , (int)random(3) + 2));
     //初期処理
     Annual annWoke = (Annual)annList.get(i);
     annWoke.graSetup();
@@ -111,6 +111,7 @@ void draw(){
   for( int i = 0; i < perList.size(); i++){
     Perennial perWoke = (Perennial)perList.get(i);
     perWoke.screen();
+    perWoke.Breeding();
   }
   
   //肉食動物クラスを表示
@@ -123,6 +124,7 @@ void draw(){
   for( int i = 0; i < herList.size(); i++){
     Herbivore herWoke = (Herbivore)herList.get(i);
     herWoke.screen();
+    
   }
   
   

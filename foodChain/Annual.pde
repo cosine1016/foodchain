@@ -22,7 +22,10 @@ class Annual extends Grass{
         if (!(childY <= 13 ||childY >= 7 + fldY)){break;}
         
       }
-      int childSeed = (int)(graSeed + random(3) - 1);
+      int childSeed = graSeed;
+      if ( (int)random(10) == 0){
+        childSeed += 1 - random(2)*2;
+      }
       if (childSeed == 0){graSeed = 1;};
       annList.add(new Annual( childX, childY , childSeed));
       

@@ -66,10 +66,21 @@ class Carnivore extends Animal {
   //死亡メソッド
   void Die(int a){
     for(int i = 0; i < 4;i++){
+      float childX;
+        float childY;
+        for(;;){
+          childX = aniX + random(100) - 50;
+          if (!(childX <= 13 || childX >= 7 + fldX )){break;}
+        }
+        for(;;){
+          childY = aniY + random(100) - 50;
+          if (!(childY <= 13 ||childY >= 7 + fldY)){break;}
+          
+        }
       if( (int)random(2) == 1){
-        annList.add(new Annual( aniX, aniY, (int)random(3) + 1));
+        annList.add(new Annual( childX, childY, (int)random(3) + 2));
       }else{
-        perList.add(new Perennial( aniX, aniY, (int)random(3) + 1));
+        perList.add(new Perennial( childX, childY, (int)random(3) + 1));
       }
     }
     //死亡

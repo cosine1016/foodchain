@@ -16,7 +16,7 @@ abstract class Grass{
     graSeed = _seed;
     graType = _type;
     if (graType == 0){
-      graSpan = 2000;
+      graSpan = 4000;
       graCol  = color( 0, 255, 0);
     }else if(graType == 1){
       graSpan = 10000;
