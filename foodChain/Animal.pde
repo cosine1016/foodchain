@@ -16,36 +16,39 @@ abstract class Animal{
   
   //コンストラクタ
   Animal( float _x, float _y, int _full, int _type){
-   aniX = _x;
-   aniY = _y;
-   aniRad = random(360);
-   aniSpd = 1;
-   aniType = _type;
-   aniSex = (int)random(2);
-   aniPre = 0;
-   aniAge = 0;
-   aniLife = _full;
-   aniFull = _full;
-   if (aniType == 0){
-     aniSpan = 20000;
-     aniCol = color(255,0,0);
-   }else if(aniType == 1){
-     aniSpan = 10000;
-     aniCol = color(0,0,255);
+   //初期化
+   aniX = _x;               //x座標を引き出した値に設定
+   aniY = _y;               //x座標を引き出した値に設定
+   aniRad = random(360);    //角度をランダムに
+   aniType = _type;         //動物の種類を保存する変数に引数を代入
+   aniSex = (int)random(2); //性別をランダムに
+   aniPre = 0;              //妊娠変数を０に
+   aniAge = 0;              //年齢を０に
+   aniLife = _full;         //満腹度を満腹度最大値に設定
+   aniFull = _full;         //満腹度最大値を引き出した値に設定
+   //動物の種類によっての値の変化
+   if (aniType == 0){     //肉食動物の設定
+     aniSpan = 20000;         //寿命を20000Fに設定
+     aniCol = color(255,0,0); //点の色を赤に
+     aniSpd = CarSpeed;       //速度を設定
+   }else if(aniType == 1){ //草食動物の設定
+     aniSpan = 10000;         //寿命を10000Fに設定
+     aniCol = color(0,0,255); //点の色を青に設定
+     aniSpd = HerSpeed;       //速度を設定
    }
   }
   
   
   //更新
-  void moveUpdate(int a){
+  void update(int index){
     
     //角度更新
     aniRad += random(10) - 5;
     
-    //動けば腹は減るものだ
+    //満腹度減少
     aniLife--;
     
-    //ついでに年も取るものだ
+    //年齢増加
     aniAge++;
     
     //妊娠しているなら生殖メソッドへ
@@ -53,8 +56,9 @@ abstract class Animal{
       Reproduction(0);  //更新メソッドから移動する場合引数に意味はない
     }
     
-    if ((aniLife <= 0) || (aniAge >= aniSpan)){  //肉食動物と草食動物の寿命を可変にしたいので考慮の必要あり
-      Die(a);
+    //寿命なら死
+    if ((aniLife <= 0) || (aniAge >= aniSpan)){
+      Die(index);
     }
     
     
@@ -77,6 +81,16 @@ abstract class Animal{
   //画面に点を表示
   void screen(){
     
+    //雄の個体数をカウント
+    //本来なら更新メソッドに置きたい処理だがコリジョンメソッドで個体数が変化してしまうため表示メソッドに
+    if(aniSex == 0){ //雄かどうか判定
+      if(aniType == 0){ //どちらの動物か判定
+        carSexParc++;
+      }else{
+        herSexParc++;
+      }
+    }
+    
     //表示
     noStroke();
     fill( aniCol);
@@ -93,19 +107,19 @@ abstract class Animal{
   
   
   //抽象化当たり判定メソッド
-  abstract void Collision(int a);
+  abstract void Collision(int index);
   
   
   //抽象化捕食メソッド
-  abstract void Predation(int a);
+  abstract void Predation(int index);
   
   
   //抽象化生殖メソッド
-  abstract void Reproduction(int a);
+  abstract void Reproduction(int index);
   
   
   //抽象化死亡メソッド
-  abstract void Die(int a);
+  abstract void Die(int index);
   
   
 }

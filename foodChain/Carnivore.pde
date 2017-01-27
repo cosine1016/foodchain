@@ -8,12 +8,11 @@ class Carnivore extends Animal {
   }
   
   //当たり判定メソッド
-  void Collision(int a){
+  void Collision(int index){
     //草食動物と肉食動物の衝突判定
     for( int i = 0; i < herList.size(); i++){
-      Herbivore herWoke2 = (Herbivore)herList.get(i);
       //距離５以下なら捕食メソッドへ
-      if(dist( aniX, aniY, herWoke2.aniX, herWoke2.aniY) < 5){
+      if(dist( aniX, aniY, herList.get(i).aniX, herList.get(i).aniY) < 5){
         Predation(i);
       }
     }
@@ -22,9 +21,10 @@ class Carnivore extends Animal {
     if ((aniSex == 1) && (aniAge >= 1000)){
       //メスのみ判定に入る
       for( int i = 0; i < carList.size(); i++){
-        Carnivore carWoke2 = (Carnivore)carList.get(i);
         //距離５以下のオスなら生殖メソッドへ
-        if((dist(aniX, aniY, carWoke2.aniX, carWoke2.aniY) < 5) && !(i == a) && (carWoke2.aniSex == 0 ) && (carWoke2.aniAge >= 1000)){
+        if((dist(aniX, aniY, carList.get(i).aniX, carList.get(i).aniY) < 5) && 
+                 (carList.get(i).aniSex == 0 ) &&
+                 (carList.get(i).aniAge >= 1000)){
           Reproduction(i);
         }
       }
@@ -32,60 +32,66 @@ class Carnivore extends Animal {
   }
   
   //捕食メソッド
-  void Predation(int a){
+  void Predation(int index){
     //捕食
-    Herbivore herWoke2 = (Herbivore)herList.get(a);
-    herWoke2.Die(a);
+    //EATを表示するオブジェクトを追加
+    chaList.add(new Chara(aniX,aniY,"EAT"));
+    //対象を殺害
+    herList.get(index).Die(index);
     //体力回復
     aniLife = aniFull;
   }
   
   //生殖メソッド
-  void Reproduction(int a){
+  void Reproduction(int index){
     if (aniPre == 0){
       //妊娠していないなら停止して妊娠変数を１に
       aniPre = 1;
       aniSpd = 0;
       //父親の遺伝情報と掛け合わせる
-      Carnivore carWoke2 = (Carnivore)carList.get(a);
-      childFull = (int)((carWoke2.aniFull + aniFull)/2 + random(100));
+      childFull = (int)((carList.get(index).aniFull + aniFull)/2 + random(100) - 50);
     }else{
-      //妊娠しているなら妊娠変数を加速
+      //妊娠しているなら妊娠変数を増加
       aniPre++;
+      //妊娠中は満腹度消費増加
       aniLife--;
     }
     if (aniPre >= 500){
-      //妊娠変数が1000に達したら出産及び速度を戻す
+      //妊娠変数が500に達したら出産及び速度を戻す
       carList.add(new Carnivore( aniX, aniY, childFull));
+      //BORNを表示するオブジェクトを追加
+      chaList.add(new Chara(aniX,aniY,"BORN"));
       aniPre = 0;
-      aniSpd = 1;
+      aniSpd = CarSpeed;
     }
   }
   
-  
   //死亡メソッド
-  void Die(int a){
+  void Die(int index){
+    //死亡時植物の種をまく（４個）
     for(int i = 0; i < 4;i++){
       float childX;
-        float childY;
-        for(;;){
-          childX = aniX + random(100) - 50;
-          if (!(childX <= 13 || childX >= 7 + fldX )){break;}
-        }
-        for(;;){
-          childY = aniY + random(100) - 50;
-          if (!(childY <= 13 ||childY >= 7 + fldY)){break;}
-          
-        }
+      float childY;
+      //フィールド外に出ないように調整
+      for(;;){
+        childX = aniX + random(100) - 50;
+        if (!(childX <= 13 || childX >= 7 + fldX )){break;}
+      }
+      for(;;){
+        childY = aniY + random(100) - 50;
+        if (!(childY <= 13 ||childY >= 7 + fldY)){break;}
+      }
+      //一年草と多年草のどちらが生まれるかはランダムで決定
       if( (int)random(2) == 1){
         annList.add(new Annual( childX, childY, (int)random(3) + 2));
       }else{
         perList.add(new Perennial( childX, childY, (int)random(3) + 1));
       }
     }
+    //DIEを表示するオブジェクトを追加
+    chaList.add(new Chara(aniX,aniY,"DIE"));
     //死亡
-    carList.remove(a);
+    carList.remove(index);
   }
-  
   
 }

@@ -6,21 +6,21 @@ abstract class Grass{
   int   graSpan;  //寿命
   int   graSeed;  //種子の数（遺伝変数）
   int   graType;  //種類（0なら一年草、1なら多年草）
-  int   graSize;  //表示の大きさ
   color graCol;   //色
   
   //コンストラクタ
   Grass( float _x, float _y, int _seed, int _type){
-    graX = _x;
-    graY = _y;
-    graSeed = _seed;
-    graType = _type;
-    if (graType == 0){
-      graSpan = 4000;
-      graCol  = color( 0, 255, 0);
-    }else if(graType == 1){
-      graSpan = 10000;
-      graCol  = color( 0, 80, 0);
+    graX = _x;       //x座標を引き出した値に設定
+    graY = _y;       //y座標を引き出した値に設定
+    graSeed = _seed; //繁殖時の子孫個体数の引き継ぎ
+    graType = _type; //植物の種類を保存する変数に引数を代入
+    //草の種類ごとに設定を変更
+    if (graType == 0){      //一年草の設定
+      graSpan = 1000;              //寿命を1000Fに設定
+      graCol  = color( 0, 255, 0); //色を黄緑に設定
+    }else if(graType == 1){ //多年草の設定
+      graSpan = 5000;              //寿命を1000Fに設定
+      graCol  = color( 0, 80, 0); //色を黄緑に設定
     }
   }
   
@@ -31,13 +31,6 @@ abstract class Grass{
     //歳をとる
     graAge++;
     
-    //子供か大人か区別する
-    if ( graAge <= graSpan*0.2){
-      graSize = 5;
-    }else{
-      graSize = 7;
-    }
-    
     
     //寿命なら死亡
     if ( graAge >= graSpan ){
@@ -46,15 +39,11 @@ abstract class Grass{
     
   }
   
+  //表示メソッド
   void screen(){
     noStroke();
     fill(graCol);
-    if ( graAge <= graSpan*0.2){
-      ellipse( graX, graY, 7, 7);
-    }else{
-      ellipse( graX, graY, 10, 10);
-    }
-
+    ellipse( graX, graY, 10, 10);
   }
   
   //初期処理
@@ -65,6 +54,6 @@ abstract class Grass{
   }
   
   //抽象化死亡メソッド
-  abstract void Die(int a);
+  abstract void Die(int index);
   
 }
